@@ -176,5 +176,9 @@ public class AddStudentPanel extends JPanel {
     idField.setText("");
     nameField.setText("");
     ageField.setText("");
+    emailField.setText("");
+    courseField.setText("");
+    yearLevelField.setText("");
+    contactNumberField.setText("");
   }
 }
