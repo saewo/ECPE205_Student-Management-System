@@ -6,6 +6,7 @@ import model.Student;
 import javax.swing.*;
 import java.awt.*;
 import java.util.List;
+import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
 
 /**
@@ -23,9 +24,12 @@ import java.util.ArrayList;
  */
 public class SearchStudentPanel extends JPanel {
   private JTextField searchField;
-  private JTextArea resultArea;
+  private JTable table;
+  private DefaultTableModel tableModel;
+  private JLabel resultLabel;
 
-  public SearchStudentPanel() {
+
+    public SearchStudentPanel() {
     setLayout(new BorderLayout());
 
     // Title
@@ -38,7 +42,7 @@ public class SearchStudentPanel extends JPanel {
     JPanel searchPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
     searchPanel.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
 
-    searchPanel.add(new JLabel("Search by ID or Name:"));
+    searchPanel.add(new JLabel("Search:"));
     searchField = new JTextField(20);
     searchPanel.add(searchField);
 
@@ -49,13 +53,18 @@ public class SearchStudentPanel extends JPanel {
     JButton clearBtn = new JButton("Clear");
     clearBtn.addActionListener(e -> {
       searchField.setText("");
-      resultArea.setText("");
+      tableModel.setRowCount(0);
+      resultLabel.setText("");
     });
     searchPanel.add(clearBtn);
+    JPanel topPanel = new JPanel(new BorderLayout());
+    topPanel.add(title, BorderLayout.NORTH);
+    topPanel.add(searchPanel, BorderLayout.CENTER);
 
-    add(searchPanel, BorderLayout.NORTH);
 
-    // Results area
+    add(topPanel, BorderLayout.NORTH);
+
+
     JPanel resultsWrapper = new JPanel(new BorderLayout());
     resultsWrapper.setBorder(BorderFactory.createEmptyBorder(10, 20, 20, 20));
 
@@ -63,22 +72,33 @@ public class SearchStudentPanel extends JPanel {
     resultsLabel.setFont(new Font("Arial", Font.BOLD, 14));
     resultsWrapper.add(resultsLabel, BorderLayout.NORTH);
 
-    resultArea = new JTextArea();
-    resultArea.setEditable(false);
-    resultArea.setFont(new Font("Monospaced", Font.PLAIN, 14));
-    JScrollPane scrollPane = new JScrollPane(resultArea);
-    resultsWrapper.add(scrollPane, BorderLayout.CENTER);
+        String[] columns = {"ID", "Name", "Age", "Email", "Course", "YearLevel", "Contact Number"};
+        tableModel = new DefaultTableModel(columns, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // make table read-only
+            }
+        };
+        table = new JTable(tableModel);
+        JScrollPane scrollPane = new JScrollPane(table);
+        resultsWrapper.add(scrollPane, BorderLayout.CENTER);
 
-    add(resultsWrapper, BorderLayout.CENTER);
+        // Result summary text
+        resultLabel = new JLabel("");
+        resultsWrapper.add(resultLabel, BorderLayout.SOUTH);
+
+        add(resultsWrapper, BorderLayout.CENTER);
+
   }
 
   private void performSearch() {
     String query = searchField.getText().trim().toLowerCase();
+    tableModel.setRowCount(0);
+    resultLabel.setText("");
 
     if (query.isEmpty()) {
-      JOptionPane.showMessageDialog(this,
-          "Please enter a search term.", "Info", JOptionPane.INFORMATION_MESSAGE);
-      return;
+        resultLabel.setText("Please enter a search term;");
+        return;
     }
 
     List<Student> allStudents = DataStore.getInstance().getAllStudents();
@@ -93,24 +113,24 @@ public class SearchStudentPanel extends JPanel {
     }
 
     if (results.isEmpty()) {
-      resultArea.setText("No students found matching: \"" + searchField.getText().trim() + "\"");
+      resultLabel.setText("No students found matching: \"" + searchField.getText().trim() + "\"");
     } else {
         StringBuilder sb = new StringBuilder();
 
-// Corrected the format specifiers and adjusted column widths.
-        sb.append(String.format("%-15s %-25s %-5s %-20s %-10s %-10s %-15s%n", "ID", "Name", "Age", "Email", "Course", "YearLevel", "Contact Number"));
+
         for (Student s : results) {
-            sb.append(String.format("%-15s %-25s %-5d %-20s %-10s %-10s %-15s%n",
+            tableModel.addRow(new Object[]{
+
                     s.getId(),
                     s.getName(),
                     s.getAge(),
                     s.getEmail(),
                     s.getCourse(),
                     s.getYearLevel(),
-                    s.getContactNumber()));
+                    s.getContactNumber()
+});
         }
-      sb.append("\nFound ").append(results.size()).append(" result(s).");
-      resultArea.setText(sb.toString());
+      resultLabel.setText("Found " +results.size() + " result(s)." );
     }
   }
 }
