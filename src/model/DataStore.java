@@ -18,12 +18,42 @@ public class DataStore {
     private static final DataStore instance = new DataStore();
     private final List<Student> students;
 
+<<<<<<< HEAD
     private DataStore() {
         students = new ArrayList<>();
         // Pre-load some sample data for testing
         students.add(new Student("2024-0001", "Juan Dela Cruz", 20, "dealCruz@gmail.com" ,"ENCE",2,63937765));
         students.add(new Student("2024-0002", "Maria Santos", 19, "Santos@gmail.com", "ENCE" ,3,6390987));
         students.add(new Student("2024-0003", "Jose Rizal", 21, "Rizal@gmail.com", "ENCE" ,3,639243525));
+=======
+  private DataStore() {
+    students = new ArrayList<>();
+    // Pre-load some sample data for testing
+    students.add(new Student("2024-0001", "Juan Dela Cruz", 20, "dealCruz@gmail.com" ,"ENCE",32,32));
+    students.add(new Student("2024-0002", "Maria Santos", 19, "Santos@gmail.com", "ENCE" ,222,32));
+    students.add(new Student("2024-0003", "Jose Rizal", 21, "Rizal@gmail.com", "ENCE" ,222,32));
+  }
+
+  /** Get the singleton instance */
+  public static DataStore getInstance() {
+    return instance;
+  }
+
+  /** Get all students */
+  public List<Student> getAllStudents() {
+    return students;
+  }
+
+  /** Add a new student */
+  public void addStudent(Student student) {
+    students.add(student);
+  }
+
+  /** Remove a student by index */
+  public void removeStudent(int index) {
+    if (index >= 0 && index < students.size()) {
+      students.remove(index);
+>>>>>>> b18eacfe5ad86138fcd92964e2f2a8112f431906
     }
 
     /** Get the singleton instance */
