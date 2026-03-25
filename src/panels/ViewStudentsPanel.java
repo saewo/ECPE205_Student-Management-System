@@ -4,10 +4,30 @@ import model.DataStore;
 import model.Student;
 
 import javax.swing.*;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import java.awt.*;
 import java.util.List;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.DefaultTableCellRenderer;
+import java.awt.Component; // Required for the return type
+import java.awt.Color;     // Required for setting colors
 
+import model.DataStore;
+import model.Student;
+
+import javax.swing.*;
+import javax.swing.event.TableModelListener;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
+import javax.swing.table.TableCellRenderer;
+import java.awt.*;
+import java.util.List;
+import javax.swing.table.DefaultTableCellRenderer;
+import java.awt.Component; // Required for the return type
+import java.awt.Color;     // Required for setting colors
 /**
  * Panel for viewing all students in a table.
  * 
@@ -24,6 +44,8 @@ import java.util.List;
 public class ViewStudentsPanel extends JPanel {
   private DefaultTableModel tableModel;
   private JTable table;
+  private TableRowSorter<TableModel> sorter;
+
 
   public ViewStudentsPanel() {
     setLayout(new BorderLayout());
@@ -35,14 +57,40 @@ public class ViewStudentsPanel extends JPanel {
     add(title, BorderLayout.NORTH);
 
     // Table
-    String[] columns = { "Student ID", "Name", "Age" };
+    String[] columns = { "Student ID", "Name", "Age" , "Email", "Course", "Year Level", "Contact Number"};
     tableModel = new DefaultTableModel(columns, 0) {
       @Override
       public boolean isCellEditable(int row, int column) {
         return false; // Read-only table
       }
+
+
+
+
     };
-    table = new JTable(tableModel);
+
+
+
+
+
+      table = new JTable(tableModel ){
+          // Inside your JTable subclass
+          @Override
+          public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
+              Component c = super.prepareRenderer(renderer, row, column);
+
+              // Apply color based on row index or content, skipping selected rows
+              if (!isRowSelected(row)) {
+                  // Example: Color rows based on data in a specific column
+                  String status = (String) getModel().getValueAt(row, 1);
+                  c.setBackground(row%2==0 ? Color.white : Color.yellow);
+              }
+              return c;
+          }
+
+      };
+
+
     table.setRowHeight(25);
     table.getTableHeader().setReorderingAllowed(false);
 
@@ -61,6 +109,8 @@ public class ViewStudentsPanel extends JPanel {
     // Load initial data
     loadData();
   }
+
+
 
   private void loadData() {
     tableModel.setRowCount(0); // Clear table
