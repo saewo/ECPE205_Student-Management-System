@@ -20,9 +20,9 @@ public class Student {
   private String email;
   private String course;
   private int yearLevel;
-  private double contactNumber;
+  private int contactNumber;
 
-  public Student(String id, String name, int age, String email, String course, int yearLevel, double contactNumber) {
+  public Student(String id, String name, int age, String email, String course, int yearLevel, int contactNumber) {
     this.id = id;
     this.name = name;
     this.age = age;
@@ -57,7 +57,7 @@ public class Student {
       return yearLevel;
   }
 
-  public double getContactNumber(){
+  public int getContactNumber(){
       return contactNumber;
   }
 
@@ -86,7 +86,7 @@ public class Student {
         this.yearLevel = yearLevel;
     }
 
-    public void setContactNumber(double contactNumber) {
+    public void setContactNumber(int contactNumber) {
         this.contactNumber = contactNumber;
     }
 
