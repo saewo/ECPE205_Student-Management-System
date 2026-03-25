@@ -35,12 +35,13 @@ public class ViewStudentsPanel extends JPanel {
     add(title, BorderLayout.NORTH);
 
     // Table
-    String[] columns = { "Student ID", "Name", "Age" };
+    String[] columns = { "Student ID", "Name", "Age" , "Course"};
     tableModel = new DefaultTableModel(columns, 0) {
       @Override
       public boolean isCellEditable(int row, int column) {
         return false; // Read-only table
       }
+
     };
     table = new JTable(tableModel);
     table.setRowHeight(25);
