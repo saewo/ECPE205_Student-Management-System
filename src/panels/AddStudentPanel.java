@@ -24,6 +24,8 @@ public class AddStudentPanel extends JPanel {
   private JTextField idField;
   private JTextField nameField;
   private JTextField ageField;
+  private JTextField emailField;
+  private JTextField courseField;
 
   public AddStudentPanel() {
     setLayout(new BorderLayout());
