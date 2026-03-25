@@ -24,6 +24,10 @@ public class AddStudentPanel extends JPanel {
   private JTextField idField;
   private JTextField nameField;
   private JTextField ageField;
+  private JTextField emailField;
+  private JTextField courseField;
+  private JTextField yearLevelField;
+  private JTextField contactNumberField;
 
   public AddStudentPanel() {
     setLayout(new BorderLayout());
@@ -73,6 +77,46 @@ public class AddStudentPanel extends JPanel {
     ageField = new JTextField(20);
     formPanel.add(ageField, gbc);
 
+      // Email
+      gbc.gridx = 0;
+      gbc.gridy = 3;
+      formPanel.add(new JLabel("Email:"), gbc);
+      gbc.gridx = 1;
+      gbc.gridy = 3;
+      gbc.weightx = 1.0;
+      emailField = new JTextField(20);
+      formPanel.add(emailField, gbc);
+
+      // Course
+      gbc.gridx = 0;
+      gbc.gridy = 4;
+      formPanel.add(new JLabel("Course:"), gbc);
+      gbc.gridx = 1;
+      gbc.gridy = 4;
+      gbc.weightx = 1.0;
+      courseField = new JTextField(20);
+      formPanel.add(courseField, gbc);
+
+      // Year Level
+      gbc.gridx = 0;
+      gbc.gridy = 5;
+      formPanel.add(new JLabel("Year Level:"), gbc);
+      gbc.gridx = 1;
+      gbc.gridy = 5;
+      gbc.weightx = 1.0;
+      yearLevelField = new JTextField(20);
+      formPanel.add(yearLevelField, gbc);
+
+      // Contact Number
+      gbc.gridx = 0;
+      gbc.gridy = 6;
+      formPanel.add(new JLabel("Contact Number:"), gbc);
+      gbc.gridx = 1;
+      gbc.gridy = 6;
+      gbc.weightx = 1.0;
+      contactNumberField = new JTextField(20);
+      formPanel.add(contactNumberField, gbc);
+
     add(formPanel, BorderLayout.CENTER);
 
     // Button panel
@@ -94,6 +138,10 @@ public class AddStudentPanel extends JPanel {
     String id = idField.getText().trim();
     String name = nameField.getText().trim();
     String ageText = ageField.getText().trim();
+    String email = emailField.getText().trim();
+    int yearLevel = Integer.parseInt(yearLevelField.getText());
+    String course = courseField.getText().trim();
+    int contactNumber = Integer.parseInt(contactNumberField.getText());
 
     // Basic validation
     if (id.isEmpty() || name.isEmpty() || ageText.isEmpty()) {
@@ -118,7 +166,7 @@ public class AddStudentPanel extends JPanel {
       return;
     }
 
-    DataStore.getInstance().addStudent(new Student(id, name, age));
+    DataStore.getInstance().addStudent(new Student(id, name, age, email, course, yearLevel, contactNumber));
     JOptionPane.showMessageDialog(this,
         "Student added successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
     clearFields();

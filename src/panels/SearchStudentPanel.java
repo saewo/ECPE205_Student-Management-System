@@ -86,7 +86,8 @@ public class SearchStudentPanel extends JPanel {
 
     for (Student s : allStudents) {
       if (s.getId().toLowerCase().contains(query)
-          || s.getName().toLowerCase().contains(query)) {
+          || s.getName().toLowerCase().contains(query)|| String.valueOf(s.getAge()).contains(query) || s.getEmail().toLowerCase().contains(query) ||
+              s.getCourse().toLowerCase().contains(query) ||String.valueOf(s.getYearLevel()).contains(query) || String.valueOf(s.getContactNumber()).contains(query)) {
         results.add(s);
       }
     }
@@ -95,10 +96,10 @@ public class SearchStudentPanel extends JPanel {
       resultArea.setText("No students found matching: \"" + searchField.getText().trim() + "\"");
     } else {
       StringBuilder sb = new StringBuilder();
-      sb.append(String.format("%-15s %-25s %-5s%n", "ID", "Name", "Age"));
+      sb.append(String.format("%-15s %-25s %-5s%n %-25s %-25s %-25s %-25s ", "ID", "Name", "Age", "Email", "Course", "YearLevel", "Contact Number"));
       sb.append("-".repeat(45)).append("\n");
       for (Student s : results) {
-        sb.append(String.format("%-15s %-25s %-5d%n", s.getId(), s.getName(), s.getAge()));
+        sb.append(String.format("%-15s %-25s %-5d%n", s.getId(), s.getName(), s.getAge(), s.getEmail(),s.getCourse(), s.getYearLevel(), s.getContactNumber() ));
       }
       sb.append("\nFound ").append(results.size()).append(" result(s).");
       resultArea.setText(sb.toString());
