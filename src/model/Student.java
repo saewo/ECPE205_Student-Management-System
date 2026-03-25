@@ -32,9 +32,6 @@ public class Student {
     this.contactNumber = contactNumber;
   }
 
-
-
-
   // --- Getters ---
   public String getId() {
     return id;
