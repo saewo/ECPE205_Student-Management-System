@@ -95,12 +95,20 @@ public class SearchStudentPanel extends JPanel {
     if (results.isEmpty()) {
       resultArea.setText("No students found matching: \"" + searchField.getText().trim() + "\"");
     } else {
-      StringBuilder sb = new StringBuilder();
-      sb.append(String.format("%-15s %-25s %-5s%n %-25s %-25s %-25s %-25s ", "ID", "Name", "Age", "Email", "Course", "YearLevel", "Contact Number"));
-      sb.append("-".repeat(45)).append("\n");
-      for (Student s : results) {
-        sb.append(String.format("%-15s %-25s %-5d%n", s.getId(), s.getName(), s.getAge(), s.getEmail(),s.getCourse(), s.getYearLevel(), s.getContactNumber() ));
-      }
+        StringBuilder sb = new StringBuilder();
+
+// Corrected the format specifiers and adjusted column widths.
+        sb.append(String.format("%-15s %-25s %-5s %-20s %-10s %-10s %-15s%n", "ID", "Name", "Age", "Email", "Course", "YearLevel", "Contact Number"));
+        for (Student s : results) {
+            sb.append(String.format("%-15s %-25s %-5d %-20s %-10s %-10s %-15s%n",
+                    s.getId(),
+                    s.getName(),
+                    s.getAge(),
+                    s.getEmail(),
+                    s.getCourse(),
+                    s.getYearLevel(),
+                    s.getContactNumber()));
+        }
       sb.append("\nFound ").append(results.size()).append(" result(s).");
       resultArea.setText(sb.toString());
     }
