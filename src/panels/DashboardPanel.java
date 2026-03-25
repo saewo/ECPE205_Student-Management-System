@@ -34,7 +34,7 @@ public class DashboardPanel extends JPanel {
         bgLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         bgLabel.setBorder(BorderFactory.createEmptyBorder(20, 40, 20, 40));
 
-        countLabel = new JLabel("Currently enrolled:  " + DataStore.getInstance().getCount() +" students!");
+        countLabel = new JLabel("Currently enrolled: " + DataStore.getInstance().getCount() +" students!");
         countLabel.setForeground(Color.WHITE);
         countLabel.setFont(new Font("Arial", Font.PLAIN, 18));
         countLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -77,6 +77,6 @@ public class DashboardPanel extends JPanel {
             for (model.Student s : students) totalAge += s.getAge();
             averageAge = (double) totalAge / students.size();
         }
-        funFactLabel.setText("Average age of students: " + String.format("%.1f", averageAge) + " years!");
+        funFactLabel.setText("Average age of students: " + String.format("%.0f", averageAge) + " years!");
     }
 }
